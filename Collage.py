@@ -24,12 +24,16 @@ Choose the necessary image extension: """)
         FORMAT = ".bmp"
 print("Working format is *{0}".format(FORMAT))
 
+folders_name = raw_input("Enter the Main dirs names: ")
+
 directory = os.getcwd()
 list_of_dirs = os.listdir(directory)
-directories = [int(x) for x in list_of_dirs if x.isdigit()]
+directories = [x for x in list_of_dirs if x[-1].isdigit()]
 
 success, not_success = 0, 0
 for i in range(1, len(directories) + 1):
+    i = "{0}_{1}".format(folders_name, i)
+    print(i)
     # Path to the working directory;
     image_dir = "{0}/{1}".format(os.getcwd(), i)        
 
@@ -50,9 +54,9 @@ for i in range(1, len(directories) + 1):
         continue
 
     # Print files in image directory;
-    print("\nThe list of *{0} files in \n'{1}'".format(FORMAT, image_dir))
-    for img in sorted(images):
-        print(img)
+    #print("\nThe list of *{0} files in \n'{1}'".format(FORMAT, image_dir))
+    #for img in sorted(images):
+        #print(img)
 
     num_of_img = len(images)
 
@@ -71,8 +75,7 @@ for i in range(1, len(directories) + 1):
     CANVAS[::] = (255,255,255)
     h = 0
     for image in sorted(images):
-        image = "/{0}/{1}".format(image_dir, image)
-        print(image)
+        image = "{0}/{1}".format(image_dir, image)
         img = cv.imread(image)
         h_img = img.shape[0]
         w_img = img.shape[1]
