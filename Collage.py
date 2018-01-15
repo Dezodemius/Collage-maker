@@ -24,7 +24,12 @@ Choose the necessary image extension: """)
         FORMAT = ".bmp"
 print("Working format is *{0}".format(FORMAT))
 
-for i in range(1, 64):
+directory = os.getcwd()
+list_of_dirs = os.listdir(directory)
+directories = [int(x) for x in list_of_dirs if x.isdigit()]
+
+success, not_success = 0, 0
+for i in range(1, len(directories) + 1):
     # Path to the working directory;
     image_dir = "{0}/{1}".format(os.getcwd(), i)        
 
@@ -40,7 +45,8 @@ for i in range(1, 64):
         
     # Checking the existence of necessary files;
     if len(images) == 0:
-        print("No *{0} files in {1}".format(FORMAT, image_dir))
+        #print("No *{0} files in {1}".format(FORMAT, image_dir))
+        not_success += 1
         continue
 
     # Print files in image directory;
@@ -74,7 +80,8 @@ for i in range(1, 64):
         h += height
     collage = CANVAS[:]
     cv.imwrite(collage_dir + "/1.png", collage)
-    print("Succesfully created!")
+    success += 1
+    print("Successfully created!")
 print("Collages saved in:\n{0}".format(collage_dir))
-
+print("The number of successfully saved: {0}\nNumber of failures: {1}".format(success, not_success))
 
