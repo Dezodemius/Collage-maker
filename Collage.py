@@ -3,10 +3,6 @@ import os
 import cv2 as cv
 import numpy as np
 
-CANVAS = []
-HEIGHTS = []
-WIDTHS = []
-
 collage_dir = os.getcwd() + "/Collages"
 
 # Choosing the format;
@@ -28,12 +24,21 @@ folders_name = raw_input("Enter the Main dirs names: ")
 
 directory = os.getcwd()
 list_of_dirs = os.listdir(directory)
-directories = [x for x in list_of_dirs if x[-1].isdigit()]
+directories = [int(x) for x in list_of_dirs if x[-1].isdigit()]
 
 success, not_success = 0, 0
+
 for i in range(1, len(directories) + 1):
-    i = "{0}_{1}".format(folders_name, i)
+    CANVAS = []
+    HEIGHTS = []
+    WIDTHS = []
+    
+    if folders_name != "":
+        i = "{0}_{1}".format(folders_name, i)[-1]
+    elif folders_name == "":
+        i = "{0}".format(i)
     print(i)
+    
     # Path to the working directory;
     image_dir = "{0}/{1}".format(os.getcwd(), i)        
 
@@ -80,9 +85,9 @@ for i in range(1, len(directories) + 1):
         h_img = img.shape[0]
         w_img = img.shape[1]
         CANVAS[h:h + h_img, :w_img] = img[:, :]
-        h += height
-    collage = CANVAS[:]
-    cv.imwrite(collage_dir + "/1.png", collage)
+        h += h_img
+        collage = CANVAS[:h]
+    cv.imwrite("{0}/{1}.png".format(collage_dir, i), collage)
     success += 1
     print("Successfully created!")
 print("Collages saved in:\n{0}".format(collage_dir))
